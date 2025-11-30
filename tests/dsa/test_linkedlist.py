@@ -1,7 +1,4 @@
-import pytest
-
-from midnight.dsa import linkedlist
-from midnight.dsa.linkedlist import LinkedList
+from midnight.dsa.linkedlist import LinkedList, Node
 
 
 class TestLinkedList:
@@ -46,14 +43,17 @@ class TestLinkedList:
         assert len(linked_list) == 1
         assert linked_list[0].element == 10
 
-    # def test_insert_with_empty_list_should_grow_with_default_values(self):
-    #     linked_list = LinkedList()
-    #
-    #     assert len(linked_list) == 0
-    #     linked_list.insert(5, 10)
-    #
-    #     assert len(linked_list) == 6
-    #     assert linked_list[5].element == 10
+    def test_set_at_head_position(self):
+        linked_list = LinkedList()
+        linked_list.append(10)
+        linked_list.append(20)
+
+        assert len(linked_list) == 2
+        linked_list[0] = Node(element=30)
+
+        assert linked_list[0].element == 30
+        assert linked_list[1].element == 20
+        assert len(linked_list) == 2
 
     def test_is_empty_linkedlist_bool(self):
         linked_list = LinkedList()

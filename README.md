@@ -8,15 +8,13 @@
 - [ ] Stack with linked lists
 
 ## Basic Operations
-- [ ] Append
-- [ ] Remove by index (pop)
-- [ ] Atribution (= replace)
-- [ ] Reset
-- [ ] Clear
-- [ ] Unique
+- [X] Append
+- [X] Remove by index (pop)
+- [X] Atribution (= replace)
 - [ ] Extend
 - [ ] Fill
 - [ ] Insert growing the list
+- [ ] Clear
 
 ## Study more
 - [ ] Iterator x Generators

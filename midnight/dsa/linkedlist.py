@@ -66,6 +66,25 @@ class LinkedList:
     def __len__(self):
         return self.count
 
+    def __setitem__(self, index: int, node: Node):
+        "replace the item in the index with the given node"
+        if index < 0 or index > self.count:
+            raise IndexError("Index out of range")
+
+        current = self.head
+
+        if index == 0:
+            node.next = current.next
+            self.head = node
+        else:
+            previous = None
+            for _ in range(index):
+                previous = current
+                current = current.next
+
+            node.next = current.next
+            previous.next = node
+
     def __getitem__(self, index: int) -> Node | None:
         if index < 0 or index > self.count:
             raise IndexError("Index out of range")
