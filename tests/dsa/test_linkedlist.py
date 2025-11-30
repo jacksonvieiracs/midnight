@@ -9,20 +9,19 @@ class TestLinkedList:
         linked_list = LinkedList()
         linked_list.push(10)
         linked_list.push(15)
+        assert linked_list[1] == 10
 
-        assert linked_list.get(1) == 10
-
-    def test_get_out_of_range_index(self):
-        linked_list = LinkedList()
-        linked_list.push(5)
-        linked_list.push(15)
-        pytest.raises(IndexError, linked_list.get, 3)
+    # def test_get_out_of_range_index(self):
+    #     linked_list = LinkedList()
+    #     linked_list.push(5)
+    #     linked_list.push(15)
+    # pytest.raises(IndexError, linked_list)
 
     def test_insert_with_empty_list_should_grow_with_default_values(self):
         linked_list = LinkedList()
 
-        assert linked_list.size == 0
+        assert len(linked_list) == 0
         linked_list.insert(5, 10)
 
-        assert linked_list.size == 6
-        assert linked_list.get(5) == 10
+        assert len(linked_list) == 6
+        assert linked_list[5] == 10

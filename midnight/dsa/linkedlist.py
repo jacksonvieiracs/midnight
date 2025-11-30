@@ -13,11 +13,10 @@ class LinkedList:
         self.count = 0
         self.head: Node | None = None
 
-    @property
-    def size(self):
+    def __len__(self):
         return self.count
 
-    def get(self, index: int) -> int | None:
+    def __getitem__(self, index: int) -> int | None:
         if index < 0 or index >= self.count:
             raise IndexError("Index out of range")
 
