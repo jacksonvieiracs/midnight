@@ -35,15 +35,6 @@ class TestLinkedList:
         assert len(linked_list) == 2
         assert linked_list[1].element == 30
 
-    def test_insert_at_head_position(self):
-        linked_list = LinkedList()
-
-        assert len(linked_list) == 0
-        linked_list.insert(0, 10)
-
-        assert len(linked_list) == 1
-        assert linked_list[0].element == 10
-
     def test_set_at_head_position(self):
         linked_list = LinkedList()
         linked_list.append(10)
@@ -138,18 +129,35 @@ class TestLinkedList:
         end = linked_list[cached_index]
         assert end.next.element == 15
 
-    def test_insert_before_in_empty_list(self):
+    def test_insert_at_head_position(self):
+        linked_list = LinkedList()
+
+        assert len(linked_list) == 0
+        linked_list.insert(0, 10)
+
+        assert len(linked_list) == 1
+        assert linked_list[0].element == 10
+
+    def test_insert_in_empty_list(self):
         """should update the count and link the nodes correctly
         the new node should be the first one (head)
         """
-        ...
+        linked_list = LinkedList()
+        linked_list.insert(0, 15)
 
-    def test_insert_before_in_middle_of_list(self):
+        assert len(linked_list) == 1
+        assert linked_list.get_head().element == 15
+
+    def test_insert_in_middle_of_list(self):
         """should update the count and link the nodes correctly"""
-        ...
+        linked_list = LinkedList()
+        linked_list.append(15)
+        linked_list.append(50)
+        linked_list.insert(1, 30)
 
-    def test_insert_before_in_the_end_of_list(self):
-        """should update the count and link the nodes correctly
-        the new node should be the last one
-        """
-        ...
+        first = linked_list[0]
+        middle = linked_list[1]
+
+        assert len(linked_list) == 3
+        assert first.next.element == 30
+        assert middle.next.element == 50

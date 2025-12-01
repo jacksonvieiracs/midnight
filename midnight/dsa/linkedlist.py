@@ -86,19 +86,6 @@ class LinkedList:
 
         self.__count += 1
 
-    def insert_before(self, index: int, element: int):
-        abs_index = abs(index)
-
-        if abs_index >= self.__count and index != 0:
-            raise IndexError("Index out of range")
-
-        node = Node(element=element)
-
-        previous = self[abs_index - 1]
-        current = previous.next
-        previous.next = node
-        node.next = current
-
     def clear(self):
         self.__head = None
         self.__count = 0
