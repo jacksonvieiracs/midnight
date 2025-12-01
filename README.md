@@ -20,6 +20,7 @@
 **Improvements**
 - [ ] Handle negatives indexes should insert starting from the end of the list
 - [ ] Double linked list implementation 
+- [ ] Fix type errors (Generic implementation linked and double linked list)
 
 # Study more
 - [ ] Iterator x Generators
