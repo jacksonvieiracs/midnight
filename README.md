@@ -14,8 +14,7 @@
 - [X] Extend
 - [ ] insert after
 - [ ] insert before
-- [ ] Insert growing the list if index > len(list)
-- [ ] get head
+- [X] get head
 - [X] Clear
 
 **Improvements**
