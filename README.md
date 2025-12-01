@@ -2,24 +2,25 @@
 
 ## Data structures
 
-**Cap 5**
-- [ ] Queue
-- [ ] Deck
-
 **Cap 6**
 - [ ] Linked lists
 - [ ] Double linked lists
-- [ ] Ordered Linked lists
 - [ ] Circular Linked lists
-- [ ] Stack with linked lists
 
 # Basic Operations
 - [X] Append
 - [X] Remove by index (pop)
 - [X] Atribution (= replace)
 - [X] Extend
+- [ ] insert after
+- [ ] insert before
 - [ ] Insert growing the list if index > len(list)
+- [ ] get head
 - [X] Clear
+
+**Improvements**
+- [ ] Handle negatives indexes should insert starting from the end of the list
+- [ ] Double linked list implementation 
 
 # Study more
 - [ ] Iterator x Generators

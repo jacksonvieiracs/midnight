@@ -33,11 +33,8 @@ class LinkedList:
         if abs_index == 0:
             self.head = current.next
         else:
-            previous = None
-            for _ in range(abs_index):
-                previous = current
-                current = current.next
-
+            previous = self[abs_index - 1]
+            current = previous.next
             previous.next = current.next
 
         self.count -= 1
@@ -96,10 +93,8 @@ class LinkedList:
             node.next = current.next
             self.head = node
         else:
-            previous = None
-            for _ in range(abs_index):
-                previous = current
-                current = current.next
+            previous = self[abs_index - 1]
+            current = previous.next
 
             node.next = current.next
             previous.next = node
