@@ -64,6 +64,16 @@ class LinkedList:
 
         self.count += 1
 
+    def extend(self, list: Self):
+        if len(list) == 0:
+            return
+
+        last = self[self.count - 1]
+        first = list[0]
+
+        last.next = first
+        self.count += len(list)
+
     def clear(self):
         self.head = None
         self.count = 0

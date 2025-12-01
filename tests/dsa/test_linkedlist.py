@@ -70,4 +70,32 @@ class TestLinkedList:
         linked_list.clear()
 
         assert len(linked_list) == 0
-        assert linked_list.head == None
+        assert linked_list.head is None
+
+    def test_extend_with_list_at_same_size(self):
+        l1 = LinkedList()
+        l1.append(20)
+        l1.append(30)
+
+        l2 = LinkedList()
+        l2.append(40)
+        l2.append(50)
+
+        assert len(l1) == 2
+        l1.extend(l2)
+
+        assert len(l1) == 4
+        assert l1[3].element == 50
+
+    def test_extend_with_empty_list(self):
+        l1 = LinkedList()
+        l1.append(20)
+        l1.append(30)
+
+        l2 = LinkedList()
+
+        assert len(l1) == 2
+        l1.extend(l2)
+
+        assert len(l1) == 2
+        assert l1[1].element == 30
