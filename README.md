@@ -1,31 +1,21 @@
 # Midnight
 
-## Data structures
+A simple workflow builder that takes the complexity out of building dynamic workflows
 
-**Cap 6**
-- [ ] Linked lists
-- [ ] Double linked lists
-- [ ] Circular Linked lists
+## Installation
 
-# Basic Operations
-- [X] Append
-- [X] Remove by index (pop)
-- [X] Atribution (= replace)
-- [X] Extend
-- [ ] insert after
-- [ ] insert before
-- [X] get head
-- [X] Clear
+```sh
+uv add 12am
+``` 
 
-**Improvements**
-- [ ] Handle negatives indexes should insert starting from the end of the list
-- [ ] Double linked list implementation 
-- [ ] Fix type errors (Generic implementation linked and double linked list)
+## Usages
 
-# Study more
-- [ ] Iterator x Generators
-- [ ] Del statement
+## Architecture and Data structures
 
-# References
-- Data structures and Algorithms with Javascript - 2 Edition - Loaine Groner
-- Fluent Python - 2 Edition - Luciano Ramalho
+## Features
+
+## Contributing
+
+## License
+
+MIT
