@@ -3,7 +3,9 @@ import logging
 import pytest
 
 from midnight.core.base import ListData, Node, NodeResult, NodeStatus
+from midnight.core.container import Container, ServiceScope
 from midnight.core.decorators import safe_execute
+from midnight.core.depedencies import Output
 from midnight.core.orchestrator import Orchestrator
 
 
@@ -110,12 +112,27 @@ class QuestionNode(Node):
         )
 
 
+class MockOutput:
+    """Mock output for testing purposes."""
+
+    def __init__(self):
+        self.messages = []
+
+    def send_text(self, text: str):
+        self.messages.append(text)
+
+
 @pytest.fixture
 def orchestrator():
     """Create a fresh orchestrator instance for each test."""
     logger = logging.getLogger("test_orchestrator")
     logger.setLevel(logging.DEBUG)
-    return Orchestrator(logger=logger)
+
+    # Create container and register mock output
+    container = Container()
+    container.register(Output, lambda: MockOutput(), ServiceScope.SINGLETON)
+
+    return Orchestrator(container=container, logger=logger)
 
 
 @pytest.mark.asyncio

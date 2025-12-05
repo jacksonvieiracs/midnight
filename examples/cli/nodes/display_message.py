@@ -2,6 +2,7 @@ from typing import override
 
 from midnight.core.base import ListData, Node, NodeResult
 from midnight.core.decorators import safe_execute
+from midnight.core.depedencies import Output
 
 
 class DisplayMessageNode(Node):
@@ -26,7 +27,7 @@ class DisplayMessageNode(Node):
 
     @override
     @safe_execute()
-    async def execute(self, data: ListData) -> NodeResult:
+    async def execute(self, data: ListData, output: Output) -> NodeResult:
         """
         Display the message to the user.
 
@@ -36,7 +37,7 @@ class DisplayMessageNode(Node):
         Returns:
             NodeResult indicating success with the displayed message
         """
-        print(f"\n{self.message}")
+        output.send_text(f"\n{self.message}")
 
         return NodeResult(
             success=True, data={}, message=self.message, is_awaiting_input=False

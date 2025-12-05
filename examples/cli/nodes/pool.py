@@ -2,6 +2,7 @@ from typing import override
 
 from midnight.core.base import ListData, Node, NodeResult
 from midnight.core.decorators import safe_execute
+from midnight.core.depedencies import Output
 
 _SELECT_PROMPT = "Select an option (1-{}):"
 
@@ -31,7 +32,7 @@ class PoolNode(Node):
 
     @override
     @safe_execute()
-    async def execute(self, data: ListData) -> NodeResult:
+    async def execute(self, data: ListData, output: Output) -> NodeResult:
         """
         Display question with options and process user selection.
 
@@ -45,11 +46,14 @@ class PoolNode(Node):
             NodeResult indicating awaiting input or completed
         """
         if self._waiting_for_input:
-            # First execution: display the question and options
-            print(f"\n? {self.question}:")
+            message = ""
+            message += f"\n? {self.question}:\n"
             for i, option in enumerate(self.options, 1):
-                print(f"  {i}. {option}")
-            print(_SELECT_PROMPT.format(len(self.options)), end=" ")
+                message += f"  {i}. {option}\n"
+
+            message += _SELECT_PROMPT.format(len(self.options))
+            output.send_text(message)
+
             self._waiting_for_input = False
 
             return NodeResult(

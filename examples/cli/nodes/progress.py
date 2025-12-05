@@ -2,6 +2,7 @@ from typing import override
 
 from midnight.core.base import ListData, Node, NodeResult
 from midnight.core.decorators import safe_execute
+from midnight.core.depedencies import Output
 
 
 class ProgressNode(Node):
@@ -34,7 +35,7 @@ class ProgressNode(Node):
 
     @override
     @safe_execute()
-    async def execute(self, data: ListData) -> NodeResult:
+    async def execute(self, data: ListData, output: Output) -> NodeResult:
         """
         Display the progress of data collection.
 
@@ -44,19 +45,23 @@ class ProgressNode(Node):
         Returns:
             NodeResult indicating success with the displayed progress
         """
+        message = ""
+
         if self.title:
-            print(f"\n{self.title}\n")
+            message += f"\n{self.title}\n"
         else:
-            print()
+            message += "\n"
 
         for label, data_key in self.fields:
             value = data.get(data_key)
             if value is not None:
                 # Field has been completed - show the value
-                print(f"✅ {value}")
+                message += f"✅ {value}\n"
             else:
                 # Field is pending - show the label
-                print(f"☑️  {label}")
+                message += f"☑️ {label}\n"
+
+        output.send_text(message)
 
         return NodeResult(
             success=True, data={}, message="Progress displayed", is_awaiting_input=False

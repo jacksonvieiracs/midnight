@@ -1,5 +1,5 @@
 [project]
-name = "12am"
+name = "midnight"
 version = "0.1.0"
 description = "A simple workflow builder that takes the complexity out of building dynamic workflows"
 readme = "README.md"

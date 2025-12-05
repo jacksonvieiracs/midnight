@@ -4,6 +4,8 @@ from nodes import DisplayMessageNode, PoolNode, QuestionNode, SummaryNode
 
 from midnight.core import Chain, Orchestrator
 from midnight.core.base.node import Node
+from midnight.core.container import Container, ServiceScope
+from midnight.core.depedencies import Output
 
 
 def create_chain() -> Node:
@@ -56,9 +58,16 @@ def create_chain() -> Node:
     )
 
 
+class ConsoleOutput:
+    def send_text(self, text: str):
+        print(text, end=" ")
+
+
 async def main():
     chain = create_chain()
-    orchestrator = Orchestrator()
+    container = Container()
+    container.register(Output, lambda: ConsoleOutput(), ServiceScope.SINGLETON)
+    orchestrator = Orchestrator(container)
     orchestrator.start(chain)
 
     await orchestrator.process()

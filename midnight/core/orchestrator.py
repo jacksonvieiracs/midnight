@@ -1,19 +1,26 @@
+import asyncio
+import inspect
 import logging
+from typing import Any
 
 from midnight.core.base import ListData, Node, NodeResult, NodeStatus
+from midnight.core.container import Container
+from midnight.core.depedencies import Output
 
 logger = logging.getLogger(__name__)
 
 
 class Orchestrator:
-    def __init__(self, logger: logging.Logger | None = None) -> None:
+    def __init__(
+        self, container: Container, logger: logging.Logger | None = None
+    ) -> None:
         self.__head: Node | None = None
         self.__current: Node | None = None
         self._data: ListData = ListData(data={})
-
         self.__started = False
         self.__ended = False
 
+        self.container = container
         self.logger = logger or logging.getLogger(__name__)
 
     @property
@@ -39,6 +46,28 @@ class Orchestrator:
         self.__ended = False
         self.__current = self.__head
         self.logger.info("Orchestrator reset to head node")
+
+    def inject(self, node: Node) -> dict[str, Any]:
+        """
+        Build dependency injection kwargs for node execution.
+
+        Returns:
+            Dictionary of parameter names to injected values
+        """
+        # Get the original function signature, unwrapping decorators if necessary
+        execute_method = node.execute
+        if hasattr(execute_method, "__wrapped__"):
+            execute_method = execute_method.__wrapped__
+
+        func_signature = inspect.signature(execute_method)
+        kwargs: dict[str, Any] = {}
+
+        kwargs["data"] = self._data
+
+        if "output" in func_signature.parameters:
+            kwargs["output"] = self.container.resolve(Output)
+
+        return kwargs
 
     async def process(self, input: str | None = None):
         """
@@ -78,7 +107,8 @@ class Orchestrator:
         self.logger.debug(f"Executing node: {node_id}")
         node.status = NodeStatus.DEFAULT
 
-        result = await node.execute(self._data)
+        kwargs = self.inject(node)
+        result = await node.execute(**kwargs)
 
         self.logger.debug(
             f"Node {node_id} execution completed - Success: {result.success}"

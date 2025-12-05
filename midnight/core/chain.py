@@ -223,9 +223,11 @@ class Chain:
         if after_each is None:
             filter_fn = None
         elif isinstance(after_each, type):
+
             def filter_fn(n):
                 return isinstance(n, after_each)
         elif isinstance(after_each, tuple):
+
             def filter_fn(n):
                 return isinstance(n, after_each)
         elif callable(after_each):

@@ -2,6 +2,7 @@ from typing import override
 
 from midnight.core.base import ListData, Node, NodeResult
 from midnight.core.decorators import safe_execute
+from midnight.core.depedencies import Output
 
 
 class QuestionNode(Node):
@@ -27,7 +28,7 @@ class QuestionNode(Node):
 
     @override
     @safe_execute()
-    async def execute(self, data: ListData) -> NodeResult:
+    async def execute(self, data: ListData, output: Output) -> NodeResult:
         """
         Ask the question and process the user's input.
 
@@ -42,7 +43,7 @@ class QuestionNode(Node):
         """
         if self._waiting_for_input:
             # First execution: display the question and wait for input
-            print(f"\n? {self.question}:", end=" ")
+            output.send_text(f"\n? {self.question}: ")
             self._waiting_for_input = False
 
             return NodeResult(

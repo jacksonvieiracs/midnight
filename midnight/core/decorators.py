@@ -2,7 +2,7 @@ import logging
 from functools import wraps
 from typing import Callable
 
-from midnight.core.base import ListData, NodeResult
+from midnight.core.base import NodeResult
 
 
 def safe_execute(logger: logging.Logger | None = None):
@@ -30,7 +30,7 @@ def safe_execute(logger: logging.Logger | None = None):
 
     def decorator(func: Callable) -> Callable:
         @wraps(func)
-        async def wrapper(self, data: "ListData") -> "NodeResult":
+        async def wrapper(self, *args, **kwargs) -> "NodeResult":
             # fix circular dependency
             from midnight.core.base import NodeResult
 
@@ -38,7 +38,7 @@ def safe_execute(logger: logging.Logger | None = None):
             node_id = getattr(self, "key", self.__class__.__name__)
 
             try:
-                result = await func(self, data)
+                result = await func(self, *args, **kwargs)
                 return result
             except Exception as e:
                 node_logger.error(
