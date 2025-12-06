@@ -59,7 +59,7 @@ def create_chain() -> Node:
 
 
 class ConsoleOutput:
-    def send_text(self, text: str):
+    async def send_text(self, text: str):
         print(text, end=" ")
 
 
