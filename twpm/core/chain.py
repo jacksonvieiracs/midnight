@@ -7,6 +7,7 @@ requiring knowledge of doubly linked list structures.
 
 from collections.abc import Callable
 
+from twpm.constants import DEFAULT_PROGRESS_NODE
 from twpm.core.base import Node
 from twpm.core.cursor import Cursor
 
@@ -217,7 +218,6 @@ class Chain:
         custom_factory = config["node_factory"]
 
         # Import here to avoid circular dependency
-        from twpm.core.primitives.task import TaskNode
 
         # Determine filter function
         if after_each is None:
@@ -235,29 +235,17 @@ class Chain:
         else:
             filter_fn = None
 
-        # Create node factory
         if custom_factory:
             node_factory = custom_factory
         else:
-            # Try to import ProgressNode, fallback to basic implementation
-            try:
-                from examples.cli.nodes import ProgressNode
+            counter = 0
 
-                counter = [0]
-
-                def node_factory(node: Node) -> Node:
-                    counter[0] += 1
-                    return ProgressNode(
-                        fields=fields, title=None, key=f"progress_{counter[0]}"
-                    )
-
-            except ImportError:
-                # If ProgressNode not available, create a simple display node
-                def node_factory(node: Node) -> Node:
-                    async def display_progress(data):
-                        return True
-
-                    return TaskNode(display_progress)
+            def node_factory(node: Node) -> Node:
+                nonlocal counter
+                counter += 1
+                return DEFAULT_PROGRESS_NODE(
+                    fields=fields, title=None, key=f"progress_{counter}"
+                )
 
         # Find the last node in the chain
         last_node = head

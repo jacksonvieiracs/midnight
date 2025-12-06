@@ -1,110 +1,102 @@
 import pytest
-from nodes import PoolNode
 
 from twpm.core.base.models import ListData
+from twpm.core.primitives import PoolNode
+
+
+class MockOutput:
+    def __init__(self):
+        self.messages = []
+
+    async def send_text(self, text: str) -> None:
+        self.messages.append(text)
 
 
 @pytest.mark.asyncio
 class TestPoolNode:
-    """Test suite for PoolNode."""
-
     async def test_first_execution_awaits_input(self):
-        # Arrange
         node = PoolNode(
             question="Color?", options=["Red", "Blue", "Green"], key="color"
         )
         data = ListData(data={})
+        output = MockOutput()
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert result.is_awaiting_input
 
     async def test_first_execution_succeeds(self):
-        # Arrange
         node = PoolNode(
             question="Color?", options=["Red", "Blue", "Green"], key="color"
         )
         data = ListData(data={})
+        output = MockOutput()
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert result.success
 
     async def test_stores_selected_option_by_index(self):
-        # Arrange
         node = PoolNode(
             question="Color?", options=["Red", "Blue", "Green"], key="color"
         )
         data = ListData(data={})
-        await node.execute(data)
+        output = MockOutput()
+        await node.execute(data, output)
         data["_user_input"] = "2"
 
-        # Act
-        await node.execute(data)
+        await node.execute(data, output)
 
-        # Assert
         assert data["color"] == "Blue"
 
     async def test_second_execution_does_not_await_input_on_valid_selection(self):
-        # Arrange
         node = PoolNode(
             question="Color?", options=["Red", "Blue", "Green"], key="color"
         )
         data = ListData(data={})
-        await node.execute(data)
+        output = MockOutput()
+        await node.execute(data, output)
         data["_user_input"] = "1"
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert not result.is_awaiting_input
 
     async def test_rejects_out_of_range_selection(self):
-        # Arrange
         node = PoolNode(
             question="Color?", options=["Red", "Blue", "Green"], key="color"
         )
         data = ListData(data={})
-        await node.execute(data)
+        output = MockOutput()
+        await node.execute(data, output)
         data["_user_input"] = "5"
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert result.is_awaiting_input
 
     async def test_rejects_non_numeric_input(self):
-        # Arrange
         node = PoolNode(
             question="Color?", options=["Red", "Blue", "Green"], key="color"
         )
         data = ListData(data={})
-        await node.execute(data)
+        output = MockOutput()
+        await node.execute(data, output)
         data["_user_input"] = "abc"
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert result.is_awaiting_input
 
     async def test_rejects_zero_selection(self):
-        # Arrange
         node = PoolNode(
             question="Color?", options=["Red", "Blue", "Green"], key="color"
         )
         data = ListData(data={})
-        await node.execute(data)
+        output = MockOutput()
+        await node.execute(data, output)
         data["_user_input"] = "0"
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert result.is_awaiting_input

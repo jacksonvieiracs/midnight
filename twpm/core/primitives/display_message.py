@@ -37,7 +37,8 @@ class DisplayMessageNode(Node):
         Returns:
             NodeResult indicating success with the displayed message
         """
-        output.send_text(f"\n{self.message}")
+
+        await output.send_text(self.message)
 
         return NodeResult(
             success=True, data={}, message=self.message, is_awaiting_input=False

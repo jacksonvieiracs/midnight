@@ -2,6 +2,7 @@ from typing import override
 
 from twpm.core.base import ListData, Node, NodeResult
 from twpm.core.decorators import safe_execute
+from twpm.core.depedencies import Output
 
 
 class SummaryNode(Node):
@@ -33,7 +34,7 @@ class SummaryNode(Node):
 
     @override
     @safe_execute()
-    async def execute(self, data: ListData) -> NodeResult:
+    async def execute(self, data: ListData, output: Output) -> NodeResult:
         """
         Display the summary of collected data.
 
@@ -43,11 +44,13 @@ class SummaryNode(Node):
         Returns:
             NodeResult indicating success with the displayed summary
         """
-        print(f"\n{self.title}\n")
+        message = f"{self.title}\n"
 
         for _, data_key in self.fields:
-            value = data.get(data_key, "N/A")
-            print(f"✅ {value}")
+            value = data.get(data_key, "-")
+            message += f"✅ {value}\n"
+
+        await output.send_text(message)
 
         return NodeResult(
             success=True, data={}, message="Summary displayed", is_awaiting_input=False

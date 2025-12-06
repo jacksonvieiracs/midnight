@@ -43,7 +43,7 @@ class QuestionNode(Node):
         """
         if self._waiting_for_input:
             # First execution: display the question and wait for input
-            output.send_text(f"\n? {self.question}: ")
+            await output.send_text(f"\n? {self.question}: ")
             self._waiting_for_input = False
 
             return NodeResult(

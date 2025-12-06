@@ -55,13 +55,11 @@ class ProgressNode(Node):
         for label, data_key in self.fields:
             value = data.get(data_key)
             if value is not None:
-                # Field has been completed - show the value
                 message += f"✅ {value}\n"
             else:
-                # Field is pending - show the label
                 message += f"☑️ {label}\n"
 
-        output.send_text(message)
+        await output.send_text(message)
 
         return NodeResult(
             success=True, data={}, message="Progress displayed", is_awaiting_input=False

@@ -52,7 +52,7 @@ class PoolNode(Node):
                 message += f"  {i}. {option}\n"
 
             message += _SELECT_PROMPT.format(len(self.options))
-            output.send_text(message)
+            await output.send_text(message)
 
             self._waiting_for_input = False
 
@@ -80,8 +80,7 @@ class PoolNode(Node):
 
             # Invalid selection, ask again
             max_opt = len(self.options)
-            print(f"Invalid option. Please select 1-{max_opt}.")
-            print(_SELECT_PROMPT.format(max_opt), end=" ")
+            await output.send_text(_SELECT_PROMPT.format(max_opt))
 
             return NodeResult(
                 success=True,
@@ -90,9 +89,7 @@ class PoolNode(Node):
                 is_awaiting_input=True,
             )
         except ValueError:
-            # Invalid format, ask again
-            print("Invalid input. Please enter a number.")
-            print(_SELECT_PROMPT.format(len(self.options)), end=" ")
+            await output.send_text("Invalid input. Please enter a number.")
 
             return NodeResult(
                 success=True,

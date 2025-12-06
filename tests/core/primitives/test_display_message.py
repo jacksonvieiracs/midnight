@@ -1,43 +1,43 @@
 import pytest
-from nodes import DisplayMessageNode
 
 from twpm.core.base.models import ListData
+from twpm.core.primitives import DisplayMessageNode
+
+
+class MockOutput:
+    def __init__(self):
+        self.messages = []
+
+    async def send_text(self, text: str) -> None:
+        self.messages.append(text)
 
 
 @pytest.mark.asyncio
 class TestDisplayMessageNode:
-    """Test suite for DisplayMessageNode."""
-
     async def test_executes_successfully(self):
-        # Arrange
         node = DisplayMessageNode(message="Test message", key="test_msg")
         data = ListData(data={})
+        output = MockOutput()
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert result.success
 
     async def test_does_not_await_input(self):
-        # Arrange
         node = DisplayMessageNode(message="Test message", key="test_msg")
         data = ListData(data={})
+        output = MockOutput()
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert not result.is_awaiting_input
 
     async def test_preserves_message_in_result(self):
-        # Arrange
         message = "Important message"
         node = DisplayMessageNode(message=message, key="test_msg")
         data = ListData(data={})
+        output = MockOutput()
 
-        # Act
-        result = await node.execute(data)
+        result = await node.execute(data, output)
 
-        # Assert
         assert result.message == message
