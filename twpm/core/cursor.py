@@ -5,6 +5,23 @@ from twpm.core.base import Node
 
 class Cursor:
     @staticmethod
+    def get_end(node: Node) -> Node:
+        """
+        Get the last node in a linked list starting from the given node.
+
+        Args:
+            node: The starting node of the linked list
+
+        Returns:
+            The last node in the linked list
+        """
+
+        current = node
+        while current.next is not None:
+            current = current.next
+        return current
+
+    @staticmethod
     def insert(target: Node, new_node: Node) -> None:
         """
         The new node is a part of linked list, this method should interate in the new_node and get
@@ -14,9 +31,11 @@ class Cursor:
                  []<->[]
            new_node   new_node_end
         """
+        new_node_end = Cursor.get_end(new_node)
         target_next = target.next
+
         target.next = new_node
-        new_node.next = target_next
+        new_node_end.next = target_next
 
     @staticmethod
     def get_range(begin: Node, end: Node) -> list[Node]:

@@ -94,6 +94,33 @@ class TestCursor:
         assert node_a.next is node_b
         assert node_b.next is None
 
+    async def test_insert_chain_of_nodes(self):
+        """Test inserting a single node between two nodes."""
+        node_a = DummyNode("A")
+        node_b = DummyNode("B")
+        node_c = DummyNode("C")
+        node_d = DummyNode("D")
+        node_e = DummyNode("E")
+
+        # Create chain: A -> B -> E
+        node_a.next = node_b
+        node_b.previous = node_a
+        node_b.next = node_e
+        node_e.previous = node_b
+
+        # Create chain: C -> D
+        node_c.next = node_d
+        node_d.previous = node_c
+
+        Cursor.insert(node_b, node_c)
+
+        # Verify chain: A -> B -> C -> D -> E
+        assert node_a.next is node_b
+        assert node_b.next is node_c
+        assert node_c.next is node_d
+        assert node_d.next is node_e
+        assert node_e.next is None
+
     async def test_get_range_full_chain(self):
         """Test getting all nodes from begin to end."""
         node_a = DummyNode("A")
