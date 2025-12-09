@@ -24,10 +24,9 @@ class PoolNode(Node):
             options: List of options to present to the user
             key: The key to store the selected option in the workflow data
         """
-        super().__init__()
+        super().__init__(key)
         self.question = question
         self.options = options
-        self.key = key
         self._waiting_for_input = True
 
     @override

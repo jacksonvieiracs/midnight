@@ -28,11 +28,10 @@ class QuizNode(Node):
             expected_answer: The correct answer (must be one of the options)
             key: The key to store the quiz result in the workflow data
         """
-        super().__init__()
+        super().__init__(key)
         self.question = question
         self.options = options
         self.expected_answer = expected_answer
-        self.key = key
         self._waiting_for_input = True
 
         if expected_answer not in options:

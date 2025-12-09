@@ -17,7 +17,7 @@ class QuizSummaryNode(Node):
         self,
         title: str,
         quiz_keys: list[str],
-        key: str | None = None,
+        key: str = "quiz_summary",
     ):
         """
         Initialize a QuizSummaryNode.
@@ -25,13 +25,11 @@ class QuizSummaryNode(Node):
         Args:
             title: The title message to display before the quiz summary
             quiz_keys: List of keys used to store quiz results (from QuizNode)
-            key: Optional unique key for this node
+            key: Unique key for this node (default: "quiz_summary")
         """
-        super().__init__()
+        super().__init__(key)
         self.title = title
         self.quiz_keys = quiz_keys
-        if key:
-            self.key = key
 
     @override
     @safe_execute()

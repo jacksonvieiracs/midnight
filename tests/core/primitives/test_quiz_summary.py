@@ -42,8 +42,8 @@ class TestQuizSummaryNode:
         assert "✅ 4" in message
         assert "✅ 6" in message
         assert "Você acertou 2 das 2 perguntas" in message
-        assert data["quiz_score"] == "2"
-        assert data["quiz_score_total"] == "2"
+        assert data["quiz_summary_score"] == "2"
+        assert data["quiz_summary_score_total"] == "2"
 
     async def test_displays_quiz_summary_with_incorrect_answers(self):
         node = QuizSummaryNode(
@@ -70,8 +70,8 @@ class TestQuizSummaryNode:
         assert "❌ 4 - 3" in message
         assert "❌ 6 - 5" in message
         assert "Você acertou 0 das 2 perguntas" in message
-        assert data["quiz_score"] == "0"
-        assert data["quiz_score_total"] == "2"
+        assert data["quiz_summary_score"] == "0"
+        assert data["quiz_summary_score_total"] == "2"
 
     async def test_displays_mixed_results(self):
         node = QuizSummaryNode(
@@ -101,8 +101,8 @@ class TestQuizSummaryNode:
         assert "❌ 6 - 5" in message
         assert "✅ 7" in message
         assert "Você acertou 2 das 3 perguntas" in message
-        assert data["quiz_score"] == "2"
-        assert data["quiz_score_total"] == "3"
+        assert data["quiz_summary_score"] == "2"
+        assert data["quiz_summary_score_total"] == "3"
 
     async def test_displays_user_and_expected_answers(self):
         node = QuizSummaryNode(
@@ -145,8 +145,8 @@ class TestQuizSummaryNode:
         message = output.messages[0]
         assert "✅ 4" in message
         assert "❌ - -" in message or "-" in message
-        assert data["quiz_score"] == "1"
-        assert data["quiz_score_total"] == "2"
+        assert data["quiz_summary_score"] == "1"
+        assert data["quiz_summary_score_total"] == "2"
 
     async def test_empty_quiz_keys_shows_zero_score(self):
         node = QuizSummaryNode(
@@ -161,8 +161,8 @@ class TestQuizSummaryNode:
         assert result.success
         message = output.messages[0]
         assert "Você acertou 0 das 0 perguntas" in message
-        assert data["quiz_score"] == "0"
-        assert data["quiz_score_total"] == "0"
+        assert data["quiz_summary_score"] == "0"
+        assert data["quiz_summary_score_total"] == "0"
 
     async def test_custom_key_set(self):
         node = QuizSummaryNode(

@@ -8,13 +8,13 @@ AsyncTaskFunc = Callable[[ListData], Awaitable[bool]]
 
 
 class TaskNode(Node):
-    def __init__(self, async_task_func: AsyncTaskFunc):
-        self.async_task_func: AsyncTaskFunc = async_task_func
-        super().__init__()
+    def __init__(self, task: AsyncTaskFunc, key: str):
+        self.task: AsyncTaskFunc = task
+        super().__init__(key)
 
     @override
     @safe_execute()
     async def execute(self, data: ListData) -> NodeResult:
-        success = await self.async_task_func(data)
+        success = await self.task(data)
         result = NodeResult(success=success, data={}, message="")
         return result

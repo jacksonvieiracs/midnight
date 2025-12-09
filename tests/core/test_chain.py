@@ -7,10 +7,9 @@ from twpm.core.chain import Chain, chain
 class DummyNode(Node):
     """Simple test node."""
 
-    def __init__(self, name: str):
-        super().__init__()
-        self.name = name
-        self.key = name
+    def __init__(self, key: str):
+        super().__init__(key)
+        self.name = key
 
     async def execute(self, data: ListData) -> NodeResult:
         return NodeResult(

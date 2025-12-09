@@ -14,7 +14,7 @@ class TestTaskNode:
         async def successful_task(data: ListData) -> bool:
             return True
 
-        node = TaskNode(successful_task)
+        node = TaskNode(successful_task, key="test_success_node")
         data = ListData(data={})
 
         result = await node.execute(data)
@@ -28,7 +28,7 @@ class TestTaskNode:
         async def failing_task(data: ListData) -> bool:
             return False
 
-        node = TaskNode(failing_task)
+        node = TaskNode(failing_task, key="test_failure_node")
         data = ListData(data={})
 
         result = await node.execute(data)
@@ -42,7 +42,7 @@ class TestTaskNode:
             value = data.get("test_key")
             return value == "expected_value"
 
-        node = TaskNode(data_access_task)
+        node = TaskNode(data_access_task, key="test_data_access_node")
         data = ListData(data={"test_key": "expected_value"})
 
         result = await node.execute(data)
@@ -58,7 +58,7 @@ class TestTaskNode:
             call_count += 1
             return True
 
-        node = TaskNode(computation_task)
+        node = TaskNode(computation_task, key="test_computation_node")
         data = ListData(data={})
 
         await node.execute(data)
@@ -71,7 +71,7 @@ class TestTaskNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        node = TaskNode(dummy_task)
+        node = TaskNode(dummy_task, key="test_initial_status_node")
 
         assert node.status == NodeStatus.DEFAULT
         assert node.next is None
@@ -83,7 +83,7 @@ class TestTaskNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        node = TaskNode(dummy_task)
+        node = TaskNode(dummy_task, key="test_empty_data_node")
         data = ListData(data={})
 
         result = await node.execute(data)
@@ -96,7 +96,7 @@ class TestTaskNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        node = TaskNode(dummy_task)
+        node = TaskNode(dummy_task, key="test_empty_message_node")
         data = ListData(data={})
 
         result = await node.execute(data)
@@ -112,8 +112,8 @@ class TestTaskNode:
         async def task2(data: ListData) -> bool:
             return True
 
-        node1 = TaskNode(task1)
-        node2 = TaskNode(task2)
+        node1 = TaskNode(task1, key="test_chain_node1")
+        node2 = TaskNode(task2, key="test_chain_node2")
 
         node1.next = node2
         node2.previous = node1
@@ -127,7 +127,7 @@ class TestTaskNode:
         async def exception_task(data: ListData) -> bool:
             raise ValueError("Test exception")
 
-        node = TaskNode(exception_task)
+        node = TaskNode(exception_task, key="test_exception_node")
         data = ListData(data={})
 
         # Should not raise - decorator catches exception and returns failed result
@@ -148,7 +148,7 @@ class TestTaskNode:
                 return int(value_a) + int(value_b) == 10
             return False
 
-        node = TaskNode(complex_task)
+        node = TaskNode(complex_task, key="test_complex_logic_node")
         data = ListData(data={"a": "4", "b": "6"})
 
         result = await node.execute(data)

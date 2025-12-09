@@ -17,7 +17,7 @@ class ProgressNode(Node):
         self,
         fields: list[tuple[str, str]],
         title: str | None = None,
-        key: str | None = None,
+        key: str = "progress",
     ):
         """
         Initialize a ProgressNode.
@@ -25,13 +25,11 @@ class ProgressNode(Node):
         Args:
             fields: List of tuples (label, data_key) representing the fields to track
             title: Optional title to display before the progress list
-            key: Optional unique key for this node
+            key: Unique key for this node (default: "progress")
         """
-        super().__init__()
+        super().__init__(key)
         self.fields = fields
         self.title = title
-        if key:
-            self.key = key
 
     @override
     @safe_execute()
