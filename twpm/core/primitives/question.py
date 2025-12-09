@@ -21,9 +21,8 @@ class QuestionNode(Node):
             question: The question to ask the user
             key: The key to store the answer in the workflow data
         """
-        super().__init__()
+        super().__init__(key)
         self.question = question
-        self.key = key
         self._waiting_for_input = True
 
     @override

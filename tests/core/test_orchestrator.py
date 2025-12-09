@@ -19,8 +19,7 @@ class MockNode(Node):
         data: dict = None,
         awaiting_input: bool = False,
     ):
-        super().__init__()
-        self.key = key
+        super().__init__(key)
         self._success = success
         self._data = data or {}
         self._awaiting_input = awaiting_input
@@ -41,8 +40,7 @@ class FailingNode(Node):
     """Node that raises an exception during execution."""
 
     def __init__(self, key: str):
-        super().__init__()
-        self.key = key
+        super().__init__(key)
         self.execute_count = 0
 
     @safe_execute()
@@ -61,8 +59,7 @@ class QuestionNode(Node):
         output_key: str = "answer",
         validate_func=None,
     ):
-        super().__init__()
-        self.key = key
+        super().__init__(key)
         self.question = question
         self.output_key = output_key
         self.validate_func = validate_func

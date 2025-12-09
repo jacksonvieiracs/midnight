@@ -18,8 +18,8 @@ class TestConditionalNode:
         async def never_executed_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(always_true_task)
-        false_node = TaskNode(never_executed_task)
+        true_node = TaskNode(always_true_task, key="true_node")
+        false_node = TaskNode(never_executed_task, key="false_node")
 
         def true_condition(data: ListData) -> bool:
             return True
@@ -42,8 +42,8 @@ class TestConditionalNode:
         async def always_true_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(never_executed_task)
-        false_node = TaskNode(always_true_task)
+        true_node = TaskNode(never_executed_task, key="true_node")
+        false_node = TaskNode(always_true_task, key="false_node")
 
         def false_condition(data: ListData) -> bool:
             return False
@@ -63,8 +63,8 @@ class TestConditionalNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(dummy_task)
-        false_node = TaskNode(dummy_task)
+        true_node = TaskNode(dummy_task, key="true_node")
+        false_node = TaskNode(dummy_task, key="false_node")
 
         def data_condition(data: ListData) -> bool:
             value = data.get("check_value")
@@ -111,8 +111,8 @@ class TestConditionalNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(dummy_task)
-        false_node = TaskNode(dummy_task)
+        true_node = TaskNode(dummy_task, key="true_node")
+        false_node = TaskNode(dummy_task, key="false_node")
 
         def condition(data: ListData) -> bool:
             return True
@@ -130,8 +130,8 @@ class TestConditionalNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(dummy_task)
-        false_node = TaskNode(dummy_task)
+        true_node = TaskNode(dummy_task, key="true_node")
+        false_node = TaskNode(dummy_task, key="false_node")
 
         def condition(data: ListData) -> bool:
             return True
@@ -151,8 +151,8 @@ class TestConditionalNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(dummy_task)
-        false_node = TaskNode(dummy_task)
+        true_node = TaskNode(dummy_task, key="true_node")
+        false_node = TaskNode(dummy_task, key="false_node")
 
         def condition(data: ListData) -> bool:
             return True
@@ -172,8 +172,8 @@ class TestConditionalNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(dummy_task)
-        false_node = TaskNode(dummy_task)
+        true_node = TaskNode(dummy_task, key="true_node")
+        false_node = TaskNode(dummy_task, key="false_node")
 
         def complex_condition(data: ListData) -> bool:
             a = data.get("a")
@@ -204,9 +204,9 @@ class TestConditionalNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        pre_node = TaskNode(dummy_task)
-        true_node = TaskNode(dummy_task)
-        false_node = TaskNode(dummy_task)
+        pre_node = TaskNode(dummy_task, key="pre_node")
+        true_node = TaskNode(dummy_task, key="true_node")
+        false_node = TaskNode(dummy_task, key="false_node")
 
         def condition(data: ListData) -> bool:
             return True
@@ -226,8 +226,8 @@ class TestConditionalNode:
         async def dummy_task(data: ListData) -> bool:
             return True
 
-        true_node = TaskNode(dummy_task)
-        false_node = TaskNode(dummy_task)
+        true_node = TaskNode(dummy_task, key="true_node")
+        false_node = TaskNode(dummy_task, key="false_node")
 
         def failing_condition(data: ListData) -> bool:
             raise RuntimeError("Condition evaluation failed")

@@ -9,7 +9,6 @@ from abc import ABC, abstractmethod
 
 from twpm.core.base.enums import NodeStatus
 from twpm.core.base.models import ListData, NodeResult
-from twpm.core.base.types import NodeKey
 
 
 class Node(ABC):
@@ -27,9 +26,9 @@ class Node(ABC):
         status: Current execution status of the node
     """
 
-    def __init__(self) -> None:
+    def __init__(self, key: str) -> None:
         """Initialize a new node with default values."""
-        self.key: NodeKey
+        self.key: str = key
         self.next: Node | None = None
         self.previous: Node | None = None
         self.status: NodeStatus = NodeStatus.DEFAULT

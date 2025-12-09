@@ -8,9 +8,8 @@ class DummyNode(Node):
     """A simple test node for testing cursor operations."""
 
     def __init__(self, name: str):
-        super().__init__()
+        super().__init__(name)
         self.name = name
-        self.key = name
 
     async def execute(self, data: ListData) -> NodeResult:
         return NodeResult(
@@ -28,9 +27,8 @@ class TypeANode(Node):
     """Test node of type A."""
 
     def __init__(self, name: str):
-        super().__init__()
+        super().__init__(name)
         self.name = name
-        self.key = name
 
     async def execute(self, data: ListData) -> NodeResult:
         return NodeResult(
@@ -45,9 +43,8 @@ class TypeBNode(Node):
     """Test node of type B."""
 
     def __init__(self, name: str):
-        super().__init__()
+        super().__init__(name)
         self.name = name
-        self.key = name
 
     async def execute(self, data: ListData) -> NodeResult:
         return NodeResult(

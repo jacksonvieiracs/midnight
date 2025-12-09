@@ -16,7 +16,7 @@ class SummaryNode(Node):
         self,
         title: str,
         fields: list[tuple[str, str]],
-        key: str | None = None,
+        key: str = "summary",
     ):
         """
         Initialize a SummaryNode.
@@ -24,13 +24,11 @@ class SummaryNode(Node):
         Args:
             title: The title message to display before the summary
             fields: List of tuples (label, data_key) to display in the summary
-            key: Optional unique key for this node
+            key: Unique key for this node (default: "summary")
         """
-        super().__init__()
+        super().__init__(key)
         self.title = title
         self.fields = fields
-        if key:
-            self.key = key
 
     @override
     @safe_execute()

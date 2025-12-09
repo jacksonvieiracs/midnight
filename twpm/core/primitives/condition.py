@@ -8,11 +8,11 @@ ConditionalFunc = Callable[[ListData], bool]
 
 
 class ConditionalNode(Node):
-    def __init__(self):
+    def __init__(self, key: str = "conditional"):
         self.condition_func: ConditionalFunc | None = None
         self.true_node: Node | None = None
         self.false_node: Node | None = None
-        super().__init__()
+        super().__init__(key)
 
     @override
     @safe_execute()

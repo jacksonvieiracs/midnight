@@ -12,18 +12,16 @@ class DisplayMessageNode(Node):
     This node simply prints a message and continues to the next node.
     """
 
-    def __init__(self, message: str, key: str | None = None):
+    def __init__(self, message: str, key: str = "display_message"):
         """
         Initialize a DisplayMessageNode.
 
         Args:
             message: The message to display to the user
-            key: Optional unique key for this node
+            key: Unique key for this node (default: "display_message")
         """
-        super().__init__()
+        super().__init__(key)
         self.message = message
-        if key:
-            self.key = key
 
     @override
     @safe_execute()
